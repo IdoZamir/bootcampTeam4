@@ -4,6 +4,8 @@ import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Dialog, FlatButton} from "material-ui";
+import MedContract from '../../build/contracts/Med.json';
+
 
 
 
@@ -23,7 +25,25 @@ class SendRequestForm extends Component {
 
     handleClose = () => {
         this.setState({open: false});
+        this.sendRequest(this.state.patientID);
     };
+
+  sendRequest(patAddress){
+      const contract = require('truffle-contract');
+      const med = contract(MedContract);
+      med.setProvider(this.props.web3.currentProvider);
+
+      // Declaring this for later so we can chain functions on SimpleStorage.
+      var medInstance;
+
+      // Get accounts.
+      med.deployed().then((instance) => {
+        medInstance = instance;
+        return medInstance.requestPatientApprove(patAddress, {from: this.props.accounts[0],gas:3000000})
+      }).then((result) => {
+        console.log("done!")
+    })
+  }
 
     render() {
         const actions = [
@@ -36,7 +56,7 @@ class SendRequestForm extends Component {
                 label="Submit"
                 primary={true}
                 disabled={false}
-                onClick={this.handleOpen}
+                onClick={this.handleClose}
             />,
         ];
         return (

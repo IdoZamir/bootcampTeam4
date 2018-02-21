@@ -5,6 +5,7 @@ import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import MedContract from '../../build/contracts/Med.json';
 
 
 class SendRequestForm extends Component {
@@ -15,7 +16,8 @@ class SendRequestForm extends Component {
             patientID: '',
             vaccineType : '',
             batchNumber: '',
-            dateAdministered: null
+            dateAdministered: null,
+            symptoms:null
         }
     }
 
@@ -31,7 +33,27 @@ class SendRequestForm extends Component {
 
     handleClose = () => {
         this.setState({open: false});
+        this.triggerTreatment();
     };
+
+    triggerTreatment=() => {
+      const contract = require('truffle-contract')
+      const med = contract(MedContract)
+      med.setProvider(this.props.web3.currentProvider)
+      // Declaring this for later so we can chain functions on SimpleStorage.
+      let medInstance
+
+      console.log("date in epoch", this.state.dateAdministered.getTime())
+      // Get accounts.
+      med.deployed().then((instance) => {
+        medInstance = instance
+        console.log("am I a doctor???...",this.state.patientID,this.state.dateAdministered.getTime(),this.state.vaccineType,this.state.batchNumber,100,this.state.symptoms)
+        return medInstance.treat(this.state.patientID,this.state.dateAdministered.getTime(),this.state.vaccineType,this.state.batchNumber,100,this.state.symptoms, {from: this.props.accounts[0],gas:300000})
+        }).then((result) => {
+            console.log("approved!",result)
+          })
+      }
+
 
     render() {
         const actions = [
@@ -50,8 +72,11 @@ class SendRequestForm extends Component {
         return (
             <div>
                 <h3>Form</h3>
-                <MuiThemeProvider>
                     <div>
+                    <div style={{
+                        display : "flex",
+                      justifyContent: "center",
+                      flexDirection: "column"}}>
                         <TextField
                             hintText="Enter the Patient ID"
                             floatingLabelText="Patient ID"
@@ -60,7 +85,6 @@ class SendRequestForm extends Component {
 
                         />
 
-                        <br />
 
                         <TextField
                             hintText="Enter the vaccine type"
@@ -68,7 +92,6 @@ class SendRequestForm extends Component {
                             onChange={(event, newValue) =>
                                 this.setState({vaccineType: newValue})} />
 
-                        <br />
 
                         <TextField
                             hintText="Enter the vaccine batch number"
@@ -76,7 +99,6 @@ class SendRequestForm extends Component {
                             onChange={(event, newValue) =>
                                 this.setState({batchNumber: newValue})} />
 
-                        <br />
 
                         <DatePicker
                             hintText="Date Administered"
@@ -84,8 +106,15 @@ class SendRequestForm extends Component {
                             onChange={this.handleChange}
                         />
 
-                        <br />
 
+                        <TextField
+                          hintText="Symptoms"
+                          value={this.state.symptoms}
+                          onChange={(event, newValue) =>
+                            this.setState({symptoms: newValue})}
+                        />
+
+                    </div>
                         <RaisedButton label="Submit" onClick={this.handleOpen} />
                         <Dialog
                             title="Confirm Details"
@@ -99,11 +128,11 @@ class SendRequestForm extends Component {
                             Vaccine Type: {this.state.vaccineType} <br />
                             Batch Number: {this.state.batchNumber} <br/>
                             Date Administered: {String(this.state.dateAdministered)} <br/>
+                            Symptoms: {this.state.symptoms} <br/>
 
                         </Dialog>
 
                     </div>
-                </MuiThemeProvider>
             </div>
         );
     }

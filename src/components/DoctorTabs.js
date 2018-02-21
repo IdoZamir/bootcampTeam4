@@ -50,16 +50,28 @@ export default class TabsExampleSwipeable extends React.Component {
                     onChangeIndex={this.handleChange}
                 >
                     <div>
-                        <SendRequestForm/>
+                        <SendRequestForm
+                          accounts={this.props.accounts}
+                          web3={this.props.web3}
+                        />
                     </div>
                     <div style={styles.slide}>
-                        <RequestRecord/>
+                        <RequestRecord
+                          accounts={this.props.accounts}
+                          web3={this.props.web3}
+                        />
                     </div>
                     <div style={styles.slide}>
-                        <AddToRecordForm/>
+                        <AddToRecordForm
+                          accounts={this.props.accounts}
+                          web3={this.props.web3}
+                        />
                     </div>
                     <div style={styles.slide}>
-                        <SearchBatchNumber/>
+                        <SearchBatchNumber
+                          accounts={this.props.accounts}
+                          web3={this.props.web3}
+                        />
                     </div>
                 </SwipeableViews>
             </div>

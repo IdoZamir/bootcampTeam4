@@ -1,17 +1,19 @@
-pragma solidity ^0.4.18;
 pragma experimental ABIEncoderV2;
+pragma solidity ^0.4.18;
+
+
 contract Med{
     //owner of the contract
     address creator;
     //structure representing a treatment
     struct Treatment{
-        int16 date;
+        int256 date;
         string virus;
         string batch;
         int16 expiry;
         string symptoms;
     }
-    
+
     // keep track of all treatments a specific patient has had;
     mapping(address => Treatment[]) patientHistory;
     // keep a list of real docs;
@@ -20,13 +22,16 @@ contract Med{
     mapping(string => Treatment[]) batchTreatments;
     // map of docs allowed to view records by PATIENT
     mapping(address => address[]) permissionPatToDoc;
-     // map of docs allowed to view records by DOCTOR
+    // map of docs allowed to view records by DOCTOR
     mapping(address => address[]) permissionDocToPat;
-    
+
+    mapping(address => address[]) pendingDoctors;
+
     function Med(address[] inputDocs) public{
         creator=msg.sender;
         docs=inputDocs;
     }
+
 
     function isDoc(address potentialDoc) private returns(bool){
         bool isDoc=false;
@@ -37,7 +42,7 @@ contract Med{
             }
         return isDoc;
     }
-    
+
     function isMyPatient(address doc, address patient) private returns(bool){
         bool isYourPatient=false;
         address[] memory docsPatients = permissionDocToPat[doc];
@@ -48,19 +53,24 @@ contract Med{
             }
         return isYourPatient;
     }
-    
-    function giveDocPermission(address docAddress){
+
+    function giveDocPermission(address docAddress) public{
+        //Check the permission address is that of a doctor
+        bool docCheck = isDoc(docAddress);
+        require(docCheck);
         //Add to all relevant treatment vars
         permissionPatToDoc[msg.sender].push(docAddress);
         permissionDocToPat[docAddress].push(msg.sender);
+        address[] memory tmp;
+        pendingDoctors[msg.sender]=tmp;
     }
-    
 
-    function treat(address patient, int16 date,string virus,string batch,int16 expiry,string symptoms) public{
+
+    function treat(address patient, int256 date,string virus,string batch,int16 expiry,string symptoms) public{
         bool docCheck = isDoc(msg.sender);
-        assert(docCheck);
+        require(docCheck);
         bool isYourPatient = isMyPatient(msg.sender, patient);
-        assert(isYourPatient);
+        require(isYourPatient);
         Treatment memory treatment;
         treatment.date=date;
         treatment.virus=virus;
@@ -72,16 +82,59 @@ contract Med{
         batchTreatments[batch].push(treatment);
     }
 
-    function getPatientTreatbyAddress(address patAddress, uint256 treatNum) constant public returns(int16, string, string, int16, string, uint256){
+    function getPatientTreatbyAddress(address patAddress, uint256 treatNum) constant public returns(int256, string, string, int16, string, uint256){
+        bool docCheck = isDoc(msg.sender) || msg.sender == patAddress;
+        require(docCheck);
+        bool isYourPatient = isMyPatient(msg.sender, patAddress) || msg.sender == patAddress;
+        require(isYourPatient);
         Treatment[] memory tmpPatient=patientHistory[patAddress];
         Treatment memory treatment = tmpPatient[treatNum];
-        return (treatment.date,treatment.virus,treatment.batch,treatment.expiry,treatment.symptoms,tmpPatient.length-1);
-    }
-    
-    function getPatientTreatbyBatch(string batchNum, uint256 treatNum) constant public returns(int16, string, string, int16, string, uint256){
-        Treatment[] memory tmpBatchList=batchTreatments[batchNum];
-        Treatment memory treatment = tmpBatchList[treatNum];
-        return (treatment.date,treatment.virus,treatment.batch,treatment.expiry,treatment.symptoms,tmpBatchList.length-1);
+        return (treatment.date,treatment.virus,treatment.batch,treatment.expiry,treatment.symptoms,tmpPatient.length);
     }
 
+    function getPatientTreatbyBatch(string batchNum, uint256 treatNum) constant public returns(int256, string, string, int16, string, uint256){
+        bool docCheck = isDoc(msg.sender);
+        require(docCheck);
+        Treatment[] memory tmpBatchList=batchTreatments[batchNum];
+        Treatment memory treatment = tmpBatchList[treatNum];
+        return (treatment.date,treatment.virus,treatment.batch,treatment.expiry,treatment.symptoms,tmpBatchList.length);
+    }
+
+    function getPatientDoctorsbyAddress(address patAddress) constant public returns(address[]){
+        address[] memory tmpPatientDoctors=permissionPatToDoc[patAddress];
+        // address memory doctor = tmpPatientDoctors[treatNum];
+        return (tmpPatientDoctors);
+    }
+
+    function amIDoc() constant public returns(bool){
+        return isDoc(msg.sender);
+    }
+
+    function myDocs() constant public returns(address[]){
+        return permissionPatToDoc[msg.sender];
+    }
+
+    function requestPatientApprove(address patAddress) public{
+    bool docCheck = isDoc(msg.sender);
+    require(docCheck);
+    bool isYourPatient = isMyPatient(msg.sender, patAddress) || msg.sender == patAddress;
+    require(!isYourPatient);
+    // check if this is first approval
+    // if(pendingDoctors[patAddress].length == null){
+    //     pendingDoctors[patAddress] = [];
+    //     pendingDoctors[patAddress].push(msg.sender);
+    //     return
+    // }
+    // check for the doctor already requested
+    address[] memory patList=pendingDoctors[patAddress];
+    for (uint16 prop = 0; prop < patList.length; prop++)
+        if (patList[prop] == msg.sender) {
+            return;
+        }
+    pendingDoctors[patAddress].push(msg.sender);
+    }
+
+    function myDocRequests() constant public returns(address[]){
+        return pendingDoctors[msg.sender];
+    }
 }

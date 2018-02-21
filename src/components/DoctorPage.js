@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import '../../NewFrontEnd/src/App.css';
 import RaisedButton from 'material-ui/RaisedButton';
 import PatientList from "./PatientList";
 import DoctorOption from "./DoctorOption";
@@ -16,7 +15,10 @@ class DoctorPage extends Component {
     render() {
         return (
             <div className="DoctorPage">
-                <DoctorTabs/>
+                <DoctorTabs
+                  accounts={this.props.accounts}
+                  web3={this.props.web3}
+                />
             </div>
         );
     }

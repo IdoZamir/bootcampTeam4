@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import '../../NewFrontEnd/src/App.css';
 import RaisedButton from 'material-ui/RaisedButton';
 import PatientList from "./PatientList";
 import PatientMedicalRecord from "./PatientMedicalRecord";
+import PatientDoctors from "./PatientDoctors";
+import PatientPendingDoctors from "./PatientPendingDoctors";
 
 class PatientPage extends Component {
     constructor(props){
@@ -16,9 +17,18 @@ class PatientPage extends Component {
     render() {
         return (
             <div className="PatientPage">
-
-                <PatientMedicalRecord/>
-
+                <PatientMedicalRecord
+                  accounts={this.props.accounts}
+                  web3={this.props.web3}
+                />
+                <PatientDoctors
+                  accounts={this.props.accounts}
+                  web3={this.props.web3}
+                />
+              <PatientPendingDoctors
+                accounts={this.props.accounts}
+                web3={this.props.web3}
+              />
             </div>
         );
     }
