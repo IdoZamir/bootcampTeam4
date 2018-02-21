@@ -15,7 +15,10 @@ class DoctorPage extends Component {
     render() {
         return (
             <div className="DoctorPage">
-                <DoctorTabs/>
+                <DoctorTabs
+                  accounts={this.props.accounts}
+                  web3={this.props.web3}
+                />
             </div>
         );
     }

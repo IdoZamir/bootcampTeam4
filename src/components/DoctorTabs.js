@@ -53,16 +53,28 @@ export default class TabsExampleSwipeable extends React.Component {
                     style={{textAlign: "center"}}
                 >
                     <div>
-                        <SendRequestForm/>
+                        <SendRequestForm
+                          accounts={this.props.accounts}
+                          web3={this.props.web3}
+                        />
                     </div>
                     <div>
-                        <RequestRecord/>
+                        <RequestRecord
+                          accounts={this.props.accounts}
+                          web3={this.props.web3}
+                        />
                     </div>
                     <div>
-                        <AddToRecordForm/>
+                        <AddToRecordForm
+                          accounts={this.props.accounts}
+                          web3={this.props.web3}
+                        />
                     </div>
                     <div>
-                        <SearchBatchNumber/>
+                        <SearchBatchNumber
+                          accounts={this.props.accounts}
+                          web3={this.props.web3}
+                        />
                     </div>
                 </SwipeableViews>
             </div>
