@@ -6,17 +6,6 @@ import RequestRecord from "./RequestRecord";
 import AddToRecordForm from "./AddToRecordForm";
 import SearchBatchNumber from "./SearchBatchNumber";
 
-const styles = {
-    headline: {
-        fontSize: 24,
-        paddingTop: 16,
-        marginBottom: 12,
-        fontWeight: 400,
-    },
-    slide: {
-        padding: 10,
-    },
-};
 
 export default class TabsExampleSwipeable extends React.Component {
 

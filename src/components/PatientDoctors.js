@@ -51,10 +51,11 @@ class PatientDoctors extends Component {
   render() {
     return (
       <div>
+        <h3>My Doctors</h3>
         {this.state.doctorList.length>0 ?
           <div>
 
-              <h3>My Doctors</h3>
+
 
             <Table>
               <TableHeader displaySelectAll={false} adjustForCheckbox={false}>

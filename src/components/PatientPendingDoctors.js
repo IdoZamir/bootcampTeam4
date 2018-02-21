@@ -89,12 +89,12 @@ class PatientPendingDoctors extends Component {
 
         </div>
         <div>
-          <RaisedButton label="Approve" onClick={this.handleSubmitDetails.bind(this)} />
+          <RaisedButton label="Approve" style={{margin: '5px'}} onClick={this.handleSubmitDetails.bind(this)} />
         </div>
 
       </div>
           :
-          <div></div>}
+          <div>You have no pending requests</div>}
       </div>
     );
   }

@@ -2,15 +2,9 @@ import React, { Component } from 'react'
 import './App.css';
 import getWeb3 from './utils/getWeb3'
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import RaisedButton from 'material-ui/RaisedButton';
-import PatientPage from "./components/patientPage";
-import DoctorPage from "./components/DoctorPage";
-import WebsiteTitle from "./components/WebsiteTitle";
 import MedContract from '../build/contracts/Med.json'
 
 
-import AddToRecordForm from "./components/AddToRecordForm"
 import DoctorTabs from "./components/DoctorTabs"
 import PatientTabs from "./components/PatientTabs"
 
@@ -27,6 +21,7 @@ class App extends Component {
   }
 
     componentWillMount() {
+
         // Get network provider and web3 instance.
         // See utils/getWeb3 for more info.
 

@@ -1,10 +1,9 @@
 import React, {Component} from "react";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
-import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Dialog, FlatButton} from "material-ui";
 import MedContract from '../../build/contracts/Med.json';
+import { purple400 } from 'material-ui/styles/colors'
 
 
 

@@ -1,24 +1,11 @@
 import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
-import SendRequestForm from "./SendRequestForm";
-import RequestRecord from "./RequestRecord";
-import AddToRecordForm from "./AddToRecordForm";
-import SearchBatchNumber from "./SearchBatchNumber";
+import PatientPendingDoctors from "./PatientPendingDoctors";
 
+import PatientDoctors from "./PatientDoctors"
 import PatientMedicalRecord from "./PatientMedicalRecord"
 
-const styles = {
-    headline: {
-        fontSize: 24,
-        paddingTop: 16,
-        marginBottom: 12,
-        fontWeight: 400,
-    },
-    slide: {
-        padding: 10,
-    },
-};
 
 export default class PatientTabsExampleSwipeable extends React.Component {
 
@@ -54,10 +41,20 @@ export default class PatientTabsExampleSwipeable extends React.Component {
                     style={{textAlign: "center"}}
                 >
                     <div>
-                        <PatientMedicalRecord/>
+                        {console.log(this.props.web3)}
+                        {this.props.web3 && <PatientMedicalRecord accounts={this.props.accounts}
+                                                                  web3={this.props.web3}
+
+                        />}
+                        {this.props.web3 && <PatientDoctors accounts={this.props.accounts}
+                                                                  web3={this.props.web3}
+
+                        />}
+
                     </div>
                     <div>
-                        <RequestRecord/>
+                        <PatientPendingDoctors accounts={this.props.accounts}
+                                               web3={this.props.web3}/>
                     </div>
 
                 </SwipeableViews>

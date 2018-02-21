@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import ViewMedicalRecord from './ViewMedicalRecord.js';
 import MedContract from '../../build/contracts/Med.json';
+import getWeb3 from '../utils/getWeb3'
+
 
 class PatientMedicalRecord extends Component {
   constructor(props) {
@@ -21,9 +23,9 @@ class PatientMedicalRecord extends Component {
   };
 
   componentWillMount() {
-    console.log("hhhhhmmmm", MedContract, this.props.web3.currentProvider);
     const contract = require('truffle-contract');
     const med = contract(MedContract);
+    console.log('currentProv', this.props.web3);
     med.setProvider(this.props.web3.currentProvider);
 
     // Declaring this for later so we can chain functions on SimpleStorage.
