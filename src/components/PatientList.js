@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../App.css';
+import '../../NewFrontEnd/src/App.css';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 
 

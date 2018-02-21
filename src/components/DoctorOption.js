@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../App.css';
+import '../../NewFrontEnd/src/App.css';
 import MobileTearSheet from './MobileTearSheet';
 import {List, ListItem} from 'material-ui/List';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';

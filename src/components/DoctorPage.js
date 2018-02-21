@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../App.css';
+import '../../NewFrontEnd/src/App.css';
 import RaisedButton from 'material-ui/RaisedButton';
 import PatientList from "./PatientList";
 import DoctorOption from "./DoctorOption";
