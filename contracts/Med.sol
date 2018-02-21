@@ -1,5 +1,7 @@
-pragma solidity ^0.4.18;
 pragma experimental ABIEncoderV2;
+pragma solidity ^0.4.18;
+
+
 contract Med{
     //owner of the contract
     address creator;
@@ -82,6 +84,12 @@ contract Med{
         Treatment[] memory tmpBatchList=batchTreatments[batchNum];
         Treatment memory treatment = tmpBatchList[treatNum];
         return (treatment.date,treatment.virus,treatment.batch,treatment.expiry,treatment.symptoms,tmpBatchList.length-1);
+    }
+
+    function getPatientDoctorsbyAddress(address patAddress) constant public returns(address[]){
+        address[] memory tmpPatientDoctors=permissionPatToDoc[patAddress];
+        // address memory doctor = tmpPatientDoctors[treatNum];
+        return (tmpPatientDoctors);
     }
 
 }

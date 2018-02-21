@@ -19,6 +19,7 @@ class SearchBatchNumber extends Component {
         super(props);
         this.state ={
             batchNumber: '',
+            open: false,
             details:[{vaccineType:"HIV", dateAdministered:"12/03/18", symptoms: 'N/A', expiry: "12/03/19"},
                 {vaccineType:"Tetanus", dateAdministered:"14/04/18", symptoms: 'N/A', expiry: "12/03/19"},]
         }
@@ -54,14 +55,15 @@ class SearchBatchNumber extends Component {
 
         return (
             <div>
-                <h3>Search by Batch Number</h3>
-                <MuiThemeProvider>
-                    <div>
+
+                    <div style={{width: '75%', margin: 'auto'}}>
+                        <h3 style={{float:'left', fontWeight: 400}}>Search by Batch Number</h3>
                         <TextField
                             hintText="Enter the Batch Number"
                             floatingLabelText="Batch Number"
                             onChange={(event, newValue) =>
                                 this.setState({batchNumber: newValue})}
+                            fullWidth={true}
                         />
                         <br />
                         <RaisedButton label="Submit" onClick={this.handleOpen}/>
@@ -90,7 +92,6 @@ class SearchBatchNumber extends Component {
 
                     </div>
 
-                </MuiThemeProvider>
             </div>
         );
     }

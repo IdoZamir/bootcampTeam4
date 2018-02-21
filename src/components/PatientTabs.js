@@ -6,6 +6,8 @@ import RequestRecord from "./RequestRecord";
 import AddToRecordForm from "./AddToRecordForm";
 import SearchBatchNumber from "./SearchBatchNumber";
 
+import PatientMedicalRecord from "./PatientMedicalRecord"
+
 const styles = {
     headline: {
         fontSize: 24,
@@ -18,7 +20,7 @@ const styles = {
     },
 };
 
-export default class TabsExampleSwipeable extends React.Component {
+export default class PatientTabsExampleSwipeable extends React.Component {
 
     constructor(props) {
         super(props);
@@ -39,12 +41,11 @@ export default class TabsExampleSwipeable extends React.Component {
                 <Tabs
                     onChange={this.handleChange}
                     value={this.state.slideIndex}
-                    inkBarStyle={{background: 'linear-gradient(to right, #8B38DF , #6372b8, #8B38DF)'}}
+                    inkBarStyle={{background: 'linear-gradient(to right, #42d66f , #6372b8, #42d66f)'}}
                 >
-                    <Tab label="Request Form" value={0} style={{backgroundColor: '#f1f1f1', color: 'darkGray', height:'10vh'}}/>
-                    <Tab label="View Patient Details" value={1} style={{backgroundColor: '#f1f1f1', color: 'darkGray'}}/>
-                    <Tab label="Add to record" value={2} style={{backgroundColor: '#f1f1f1', color: 'darkGray'}}/>
-                    <Tab label="Search by Batch Number" value={3} style={{backgroundColor: '#f1f1f1', color: 'darkGray'}}/>
+                    <Tab label="View Medical Records" value={0} style={{backgroundColor: '#f1f1f1', color: 'darkGray', height:'10vh'}}/>
+                    <Tab label="Accept Permission Requests" value={1} style={{backgroundColor: '#f1f1f1', color: 'darkGray'}}/>
+
                 </Tabs>
                 <div style={{height: '100px'}}></div>
                 <SwipeableViews
@@ -53,17 +54,12 @@ export default class TabsExampleSwipeable extends React.Component {
                     style={{textAlign: "center"}}
                 >
                     <div>
-                        <SendRequestForm/>
+                        <PatientMedicalRecord/>
                     </div>
                     <div>
                         <RequestRecord/>
                     </div>
-                    <div>
-                        <AddToRecordForm/>
-                    </div>
-                    <div>
-                        <SearchBatchNumber/>
-                    </div>
+
                 </SwipeableViews>
             </div>
         );

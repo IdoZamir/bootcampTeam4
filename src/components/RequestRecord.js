@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import TextField from 'material-ui/TextField';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import ViewMedicalRecord from './ViewMedicalRecord.js';
 
@@ -24,25 +23,26 @@ class RequestRecord extends Component {
 
         return (
             <div>
-                    <div>
-                        <h3>Find Patient record</h3>
 
-                        <div>
-                            <TextField
-                                hintText="Enter the Patient ID"
-                                floatingLabelText="Patient ID"
-                                onChange={(event, newValue) =>
-                                    this.setState({patientID: newValue})}
-                            />
-                            <br />
+                <div style={{width: '75%', margin: 'auto'}}>
+                    <h3 style={{float:'left', fontWeight: 400}}>Find Patient Records</h3>
+                    <TextField
+                        hintText="Enter the Patient ID"
+                        floatingLabelText="Patient ID"
+                        onChange={(event, newValue) =>
+                            this.setState({patientID: newValue})}
+                        fullWidth={true}
 
-                            <RaisedButton label="Submit" onClick={this.handleSubmitDetails.bind(this)} />
+                    />
+                    <br/>
 
-                        </div>
-                        {this.state.requestedRecord ? <ViewMedicalRecord patientID={this.state.patientID}/> : ''}
-                    </div>
+                    <RaisedButton label="Submit" onClick={this.handleSubmitDetails.bind(this)} />
+                    {this.state.requestedRecord ? <ViewMedicalRecord patientID={this.state.patientID}/> : ''}
+
+                </div>
             </div>
-        );
+
+        )
     }
 }
 

@@ -33,25 +33,23 @@ class ViewMedicalRecord extends Component {
     render() {
         return (
             <div>
-                <MuiThemeProvider>
-                    <div>
-                        <h3>Medical Record of Patient: {this.props.patientID}</h3>
-                        <Table>
-                            <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-                                <TableRow>
-                                    <TableHeaderColumn>Vaccine</TableHeaderColumn>
-                                    <TableHeaderColumn>Batch Number</TableHeaderColumn>
-                                    <TableHeaderColumn>Date Administered</TableHeaderColumn>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody displayRowCheckbox={false}>
-                                {this.generateRows()}
-                            </TableBody>
-                        </Table>
+                <div>
+                    <h3>Medical Record of Patient: {this.props.patientID}</h3>
+                    <Table>
+                        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                            <TableRow>
+                                <TableHeaderColumn>Vaccine</TableHeaderColumn>
+                                <TableHeaderColumn>Batch Number</TableHeaderColumn>
+                                <TableHeaderColumn>Date Administered</TableHeaderColumn>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody displayRowCheckbox={false}>
+                            {this.generateRows()}
+                        </TableBody>
+                    </Table>
 
 
-                    </div>
-                </MuiThemeProvider>
+                </div>
             </div>
         );
     }

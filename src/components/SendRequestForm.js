@@ -14,7 +14,8 @@ class SendRequestForm extends Component {
             patientID: '',
             vaccineType : '',
             batchNumber: '',
-            dateAdministered: null
+            dateAdministered: null,
+            open: false
         }
     }
     handleOpen = () => {
@@ -41,29 +42,29 @@ class SendRequestForm extends Component {
         ];
         return (
             <div>
-                <h3>Request Permission to View Patient Records</h3>
-                    <div>
-                        <TextField
-                            hintText="Enter the Patient ID"
-                            floatingLabelText="Patient ID"
-                            onChange={(event, newValue) =>
-                                this.setState({patientID: newValue})}
+                <div style={{width: '75%', margin: 'auto'}}>
+                    <h3 style={{float:'left', fontWeight: 400}}>Request Permission to View Patient Records</h3>
+                    <TextField
+                        hintText="Enter the Patient ID"
+                        floatingLabelText="Patient ID"
+                        onChange={(event, newValue) =>
+                            this.setState({patientID: newValue})}
+                        fullWidth={true}
 
-                        />
-                        <br/>
+                    />
+                    <br/>
 
-                        <RaisedButton label="Submit" onClick={this.handleOpen} />
-                        <Dialog
-                            title="Confirm Details"
-                            actions={actions}
-                            modal={false}
-                            open={this.state.open}
-                            onRequestClose={this.handleClose}
-                        >
-                            You are requesting the medical history of patient: {this.state.patientID}
-                        </Dialog>
-
-                    </div>
+                    <RaisedButton label="Submit" onClick={this.handleOpen} />
+                    <Dialog
+                        title="Confirm Details"
+                        actions={actions}
+                        modal={false}
+                        open={this.state.open}
+                        onRequestClose={this.handleClose}
+                    >
+                        You are requesting the medical history of patient: {this.state.patientID}
+                    </Dialog>
+                </div>
             </div>
         );
     }

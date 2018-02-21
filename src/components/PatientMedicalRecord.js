@@ -32,10 +32,10 @@ class PatientMedicalRecord extends Component {
     render() {
         return (
             <div>
-                <MuiThemeProvider>
-                    <div>
-                        <h3>Your Medical Record</h3>
-                        <Table>
+                <div style={{width: "75%", margin: 'auto'}}>
+                    <h3 style={{textAlign:'left', fontWeight: 400, width:"100%"}}>Your Medical Record</h3>
+                    <div style={{display:"inline-block"}}>
+                        <Table style={{backgroundColor: "#f6f6f6", overflow: 'visible'}}>
                             <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                                 <TableRow>
                                     <TableHeaderColumn>Vaccine</TableHeaderColumn>
@@ -47,10 +47,11 @@ class PatientMedicalRecord extends Component {
                                 {this.generateRows()}
                             </TableBody>
                         </Table>
-
-
                     </div>
-                </MuiThemeProvider>
+
+
+
+                </div>
             </div>
         );
     }
